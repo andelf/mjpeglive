@@ -69,11 +69,12 @@ statistics() ->
 %%--------------------------------------------------------------------
 init([]) ->
     Program = filename:join(code:priv_dir(mjpeglive), "capturer_mjpeg"),
-    Port = open_port({spawn_executable, Program}, [{args, ["-p", "3",
+    Port = open_port({spawn_executable, Program}, [{args, ["-D", "/dev/video1",
+                                                           "-p", "3",
                                                            "-w", "320*240"]},
                                                    stream,
                                                    binary]),
-
+    erlang:port_command(Port, "\r"),
     {ok, #state{port=Port}}.
 
 %%--------------------------------------------------------------------
@@ -136,7 +137,7 @@ handle_info({Port, {data, Jpeg}}, State = #state{port=Port,recv_group=Dict,count
                           (_Pid, remote_sending) ->
                                remote_sending
                        end, Dict),
-    erlang:port_command(Port, "n\r"),
+    erlang:port_command(Port, "\r"),
     {noreply, State#state{counter=Count+1, recv_group=NewDict}};
 handle_info({Port, closed}, State = #state{port=Port}) ->
     {stop, port_closed, State};
