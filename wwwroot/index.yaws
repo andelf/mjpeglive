@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>王猫猫的 R-pi</title>
+    <style type="text/css">
+      a:hover {
+        background: yellow;
+      }
+      li {
+        display: inline;
+        margin: 0px 10px 0px 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1><a href="#">王猫之Pi</a></h1>
+    </header>
+    <nav>
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </nav>
+    <hr />
+    <section>
+      <article>
+        <header>
+          <h1><a href="#">直播测试</a></h1>
+        </header>
+        <section>
+          <img src="/live" alt="直播画面" />
+          <p>直播画面...</p>
+        </section>
+      </article>
+    </section>
+    <hr />
+    <footer>
+      <p>Copyright &copy; 2013 All Rights</p>
+    </footer>
+  </body>
+</html>
