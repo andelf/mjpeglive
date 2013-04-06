@@ -132,12 +132,16 @@ static int read_frame  (int * fd, int width, int height, int * n_buffers,
         fprintf(stderr, "not implemented!\n");
         break;
     case 3: //YUYV
-
         Bpf = width*height*2;
-        ret = compress_yuyv_to_jpeg(buffers[buf.index].start, width, height, Bpf, outbuf, 80);
-        watermarked_p = jpeg_add_watermark(outbuf, Bpf, &Bpf);
-        ret = write(STDOUT_FILENO, watermarked_p, Bpf);
-        gdFree(watermarked_p);
+        if (buf.bytesused < Bpf) {
+          fprintf(stderr, "partical frame, ignore\n");
+        }
+        else {
+          ret = compress_yuyv_to_jpeg(buffers[buf.index].start, width, height, Bpf, outbuf, 80);
+          watermarked_p = jpeg_add_watermark(outbuf, Bpf, &Bpf);
+          ret = write(STDOUT_FILENO, watermarked_p, Bpf);
+          gdFree(watermarked_p);
+        }
         break;
     default:
 		break;
@@ -204,9 +208,6 @@ static void mainloop (int * fd, int width, int height, int * n_buffers,
 
         int cmd = getchar();              /* wait */
         switch (cmd) {
-        case 'n':
-          continue;
-          break;
         case 'q':
           // fprintf(stderr, "quit\n");
           // stop_capturing(fd);
