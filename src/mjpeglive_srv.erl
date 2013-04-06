@@ -36,8 +36,6 @@
 %% @end
 %%--------------------------------------------------------------------
 start_link() ->
-%% erlang:port_command(P, "n\r").
-%% erlang:port_command(P, "q\r").
     gen_server:start_link({local, ?SERVER}, ?MODULE, [], []).
 
 add_listener(Pid) ->
@@ -68,6 +66,8 @@ statistics() ->
 %% @end
 %%--------------------------------------------------------------------
 init([]) ->
+    %% capturer_mjpeg support some commands, for help, refer
+    %% capturer_mjpeg -h
     Program = filename:join(code:priv_dir(mjpeglive), "capturer_mjpeg"),
     Port = open_port({spawn_executable, Program}, [{args, ["-p", "3",
                                                            "-w", "320*240"]},
